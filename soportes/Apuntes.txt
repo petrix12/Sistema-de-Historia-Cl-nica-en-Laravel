@@ -56,8 +56,55 @@ VIDEO 04:
 *** COMMIT 2: "Crear sistema autenticación" ***
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Crear sistema autenticación" ***
+*** Ver todos los commit's: $ git log --pretty=oneline ***
 
 VIDEO 05:
+CONFIGURAR BD
+=============
+008. Establecer juego de caracteres utf8_unicode_ci en config\database.php:
+    ***
+    'mysql' => [
+        'driver' => 'mysql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '3306'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', 'forge'),
+        'password' => env('DB_PASSWORD', ''),
+        'unix_socket' => env('DB_SOCKET', ''),
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix' => '',
+        'strict' => true,
+        'engine' => null,
+    ],
+    ***
+
+009. Configurar conexión de BD en archivo .env:
+    ***
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=clinic
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ***
+
+010. Crear BD clinic en MySQL con el juego de caracteres utf8_unicode_ci
+
+011. Ejecutar migración:
+    $ php artisan migrate
+
+*** COMMIT 3: "Configurar BD" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Configurar BD" ***
+
+VERIFICACIÓN DE EMAIL
+=====================
+012. En routes\web.php reemplazar
+        Auth::routes();
+    por
+        Auth::routes(['verify' => true]);
+
 
 *** 4/62 ***
 ------------------------------------------------------------------------------------------------------
@@ -67,43 +114,11 @@ VIDEO 05:
 
 
 
-CONFIGURAR BD
-08. Establecer juego de caracteres utf8_unicode_ci en config\database.php:
-***
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-        ],
-***
 
-09. Configurar conexión de BD en archivo .env:
-        DB_CONNECTION=mysql
-        DB_HOST=127.0.0.1
-        DB_PORT=3306
-        DB_DATABASE=clinic
-        DB_USERNAME=root
-        DB_PASSWORD=
 
-10. Crear BD clinic en MySQL con el juego de caracteres utf8_unicode_ci
 
-11. Ejecutar migración:
-        $ php artisan migrate
 
-VERIFICACIÓN DE EMAIL
-12. En routes\web.php reemplazar
-        Auth::routes();
-    por
-        Auth::routes(['verify' => true]);
+
 
 13. Registrarse el Mailtrap en https://mailtrap.io
 14. Crear Inbox de nommbre clinic.
