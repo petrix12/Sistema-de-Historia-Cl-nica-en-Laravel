@@ -13,7 +13,7 @@ GENERAR NUEVO PROYECTO LARAVEL
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Proyecto Laravel 5.7 nuevo" ***
 
-VIDEO 02:
+VIDEO 02: *** Instalación de Laravel ***
 VIDEO 03:
 CREAR UN HOST VIRTUAL
 =====================
@@ -105,44 +105,46 @@ VERIFICACIÓN DE EMAIL
     por
         Auth::routes(['verify' => true]);
 
+VIDEO 06:
+*** Diseño de diagrama Entidad - Relación (E-R) ***
+*** Se recomienda descargar yEd Graph Editor en https://www.yworks.com/downloads#yEd ***
 
-*** 4/62 ***
-------------------------------------------------------------------------------------------------------
+VIDEO 07:
+013. Registrarse el Mailtrap en https://mailtrap.io
 
+014. Crear Inbox de nommbre clinic.
 
-
-
-
-
-
-
-
-
-
-
-13. Registrarse el Mailtrap en https://mailtrap.io
-14. Crear Inbox de nommbre clinic.
-15. Copiar credenciales para Laravel y pegarlas en el archivo .env:
+015. Copiar credenciales para Laravel y pegarlas en el archivo .env:
+    ***
     MAIL_MAILER=smtp
     MAIL_HOST=smtp.mailtrap.io
     MAIL_PORT=2525
-    MAIL_USERNAME=736d45a00bc428
-    MAIL_PASSWORD=b684348b0daa79
+    MAIL_USERNAME=635f7f7d9b8246
+    MAIL_PASSWORD=d9e996c89b4412
     MAIL_ENCRYPTION=tls
+    ***
 
-16. Registrarse en el proyecto que estamos creando.
+016. Registrar un usuario de prueba en nuestro proyecto.
     http://clinic.com/register
 
-17. Ir a Mailtrap y verificar el email.
-    https://mailtrap.io/signin
+*** Ir a Mailtrap y verificar el email: https://mailtrap.io/signin ***
+*** Resetear contraseña en el proyecto que estamos creando: http://clinic.com/password/reset ***
 
-18. Resetear contraseña en el proyecto que estamos creando.
-    http://clinic.com/password/reset
-
-19. En el archivo .env cambiar la línea:
+017. En el archivo .env cambiar la línea:
         APP_URL=http://localhost
     por
         APP_URL=http://clinic.com
+
+*** COMMIT 4: "Verificación de email" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Verificación de email" ***
+
+VIDEO 08:
+
+*** 7/62 ***
+------------------------------------------------------------------------------------------------------
+
+
 
 CONFIGURACIÓN DE DESKTOP GITHUB
 20. Descargar Desktop GitHub en https://desktop.github.com e instalar.
