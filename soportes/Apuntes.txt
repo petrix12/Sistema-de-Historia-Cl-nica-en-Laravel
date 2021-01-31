@@ -2,7 +2,7 @@ Proyecto Sistema de Historia Clínica en Laravel
 ===============================================
 https://www.youtube.com/playlist?list=PLS3ZgoVufwTmVTRZnxekoeST-C9OzKzKk
 
-VIDEOS 01 Y 02:
+VIDEO 01:
 GENERAR NUEVO PROYECTO LARAVEL
 ==============================
 001. Crear proyecto:
@@ -11,8 +11,9 @@ GENERAR NUEVO PROYECTO LARAVEL
 *** COMMIT 1: "Proyecto Laravel 5.7 nuevo" ***
 *** Iniciar repositorio: $ git init ***
 *** Añadir archivos a la zona index: $ git add .
-*** Guardar archivos en repositorio: $ ***
+*** Guardar archivos en repositorio: $ git commit -m "Proyecto Laravel 5.7 nuevo" ***
 
+VIDEO 02:
 VIDEO 03:
 CREAR UN HOST VIRTUAL
 =====================
@@ -35,19 +36,36 @@ CREAR UN HOST VIRTUAL
 
 004. Reiniciar el servidor Apache.
 
-AJUSTES INICIALES
-=================
+CREAR SISTEMA DE AUTENTICACIÓN
+==============================
 005. En resources\views\welcome.blade.php cambiar Laravel por Historia Clínica App.
 
-3/62
+VIDEO 04:
+006. Agregar la implementación MustVerifyEmail a la clase User de app\User.php
+    ***
+    use Illuminate\Foundation\Auth\User as Authenticatable;
+
+    class User extends Authenticatable implements MustVerifyEmail
+    {
+        use Notifiable;
+    ***
+
+007. Crear sistema de autenticación:
+    $ php artisan make:auth
+
+*** COMMIT 2: "Crear sistema autenticación" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Crear sistema autenticación" ***
+
+VIDEO 05:
+
+*** 4/62 ***
 ------------------------------------------------------------------------------------------------------
 
 
-06. Agregar la implementación MustVerifyEmail a la clase User de app\User.php
-    class User extends Authenticatable implements MustVerifyEmail
 
-07. Crear sistema de autenticación:
-    $ php artisan make:auth
+
+
 
 CONFIGURAR BD
 08. Establecer juego de caracteres utf8_unicode_ci en config\database.php:
