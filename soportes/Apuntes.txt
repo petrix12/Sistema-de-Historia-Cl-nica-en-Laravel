@@ -1,0 +1,382 @@
+Proyecto Sistema de Historia Clínica en Laravel
+===============================================
+https://www.youtube.com/playlist?list=PLS3ZgoVufwTmVTRZnxekoeST-C9OzKzKk
+
+VIDEOS 01 Y 02:
+GENERAR NUEVO PROYECTO LARAVEL
+==============================
+001. Crear proyecto:
+	$ composer create-project laravel/laravel clinic "5.7.*"
+
+*** COMMIT 1: "Proyecto Laravel 5.7 nuevo" ***
+*** Iniciar repositorio: $ git init ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ ***
+
+VIDEO 03:
+CREAR UN HOST VIRTUAL
+=====================
+002. Agregar el siguiente código al final del archivo C:\Windows\System32\drivers\etc\hosts
+    # Host virtual para el proyecto Sistema de Historia Clínica en Laravel (Lado del cliente) 
+    127.0.0.1	clinic.com
+    NOTA: Editar con el block de notas en modo de administrador.
+
+003. Agregar el siguiente código al final del archivo C:\xampp\apache\conf\extra\httpd-vhosts.conf
+    # Host virtual para el proyecto Sistema de Historia Clínica en Laravel (Lado del servidor)
+    <VirtualHost *:80>
+        DocumentRoot "C:\xampp\htdocs\cursos\02laravel_clinic\clinic\public"
+        ServerName clinic.com
+    </VirtualHost>
+    NOTA: En el archivo C:\xampp\apache\conf\httpd.conf las línea:
+        Include conf/extra/httpd-vhosts.conf
+    y
+        LoadModule rewrite_module modules/mod_rewrite.so
+    no deben estar comentada con #.
+
+004. Reiniciar el servidor Apache.
+
+AJUSTES INICIALES
+=================
+005. En resources\views\welcome.blade.php cambiar Laravel por Historia Clínica App.
+
+3/62
+------------------------------------------------------------------------------------------------------
+
+
+06. Agregar la implementación MustVerifyEmail a la clase User de app\User.php
+    class User extends Authenticatable implements MustVerifyEmail
+
+07. Crear sistema de autenticación:
+    $ php artisan make:auth
+
+CONFIGURAR BD
+08. Establecer juego de caracteres utf8_unicode_ci en config\database.php:
+***
+        'mysql' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+***
+
+09. Configurar conexión de BD en archivo .env:
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=clinic
+        DB_USERNAME=root
+        DB_PASSWORD=
+
+10. Crear BD clinic en MySQL con el juego de caracteres utf8_unicode_ci
+
+11. Ejecutar migración:
+        $ php artisan migrate
+
+VERIFICACIÓN DE EMAIL
+12. En routes\web.php reemplazar
+        Auth::routes();
+    por
+        Auth::routes(['verify' => true]);
+
+13. Registrarse el Mailtrap en https://mailtrap.io
+14. Crear Inbox de nommbre clinic.
+15. Copiar credenciales para Laravel y pegarlas en el archivo .env:
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=736d45a00bc428
+    MAIL_PASSWORD=b684348b0daa79
+    MAIL_ENCRYPTION=tls
+
+16. Registrarse en el proyecto que estamos creando.
+    http://clinic.com/register
+
+17. Ir a Mailtrap y verificar el email.
+    https://mailtrap.io/signin
+
+18. Resetear contraseña en el proyecto que estamos creando.
+    http://clinic.com/password/reset
+
+19. En el archivo .env cambiar la línea:
+        APP_URL=http://localhost
+    por
+        APP_URL=http://clinic.com
+
+CONFIGURACIÓN DE DESKTOP GITHUB
+20. Descargar Desktop GitHub en https://desktop.github.com e instalar.
+
+21. Iniciar repositorio:
+    $ git init
+
+22. Ejecutar Desktop GitHub y añadir el repositorio creado anteriormente en local.
+
+ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
+23. Crear migración junto con su modelo de la tabla roles:
+    $ php artisan make:model Role -m -c -r
+
+24. Crear migración junto con su modelo de la tabla permissions:
+    $ php artisan make:model Permission -m -c -r
+
+25. Modificar el método up en database\migrations\2021_01_12_024639_create_roles_table.php 
+    para agregar campos a la table roles:
+    public function up()
+    {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
+    }
+
+26. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Role.php:
+    ****
+    class Role extends Model
+    {
+        // ATRIBUTOS DE ASIGNACIÓN MASIVA
+        protected $fillable = [
+            'name', 'description', 'slug'
+        ];
+
+        // RELACIONES ENTRE LOS MODELOS
+        public function permissions(){
+            // Relación uno a muchos
+            return $this->hasMany('App\Permission');
+        }
+
+        public function users(){
+            // Relación muchos a muchos
+            return $this->belongsToMany('App\User');
+        }
+    ****
+
+27. Modificar el método up en database\migrations\2021_01_12_031035_create_permissions_table.php 
+    para agregar campos a la table permissions:
+    public function up()
+    {
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+28. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Permission.php:
+    ****
+    class Permission extends Model
+    {
+        // ATRIBUTOS DE ASIGNACIÓN MASIVA
+        protected $fillable = [
+            'name', 'slug', 'description'
+        ];
+
+        // RELACIONES ENTRE LOS MODELOS
+        public function role(){
+            // Relación muchos a uno
+            return $this->belongsTo('App\Role');
+        }
+
+        public function users(){
+            // Relación muchos a muchos
+            return $this->belongsToMany('App\User')->withTimestamps();
+        }
+    ****
+
+28. Establecer las relaciones entre modelos en app\User.php:
+    ****
+    class User extends Authenticatable implements MustVerifyEmail
+    {
+    ****
+        // RELACIONES ENTRE LOS MODELOS
+        public function permissions(){
+            // Relación muchos a muchos
+            return $this->belongsToMany('App\Permission');
+        }
+
+        public function roles(){
+            // Relación muchos a muchos
+            return $this->belongsToMany('App\Role')->withTimestamps();
+        }
+    ****
+
+29. Crear tabla pivote en la migración para role_user:
+    $ php artisan make:migration create_role_user_table --create=role_user
+
+30. Modificar el método up en database\migrations\2021_01_12_134553_create_role_user_table.php
+    para agregar campos y restricciones a la table role_user:
+    public function up()
+    {
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+31. Crear tabla pivote en la migración para permission_user:
+    $ php artisan make:migration create_permission_user_table --create=permission_user
+
+32. Modificar el método up en database\migrations\2021_01_12_141953_create_permission_user_table.php
+    para agregar campos y restricciones a la table permission_user:
+    public function up()
+    {
+        Schema::create('permission_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('permission_id');
+            $table->foreign('permission_id')->references('id')->on('permissions')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+33. Ejecutar migración:
+    $ php artisan migrate
+
+<<<<<<< HEAD
+VISTAS Y DISEÑO DE PLANTILLAS
+34. Descargar plantilla basada en el framework materialize en https://bit.ly/2NCb2rS
+
+35. Crear directorios:
+        resources\views\theme
+        resources\views\theme\backoffice
+        resources\views\theme\backoffice\layouts
+        resources\views\theme\backoffice\layouts\includes
+        resources\views\theme\backoffice\pages
+        resources\views\theme\frontoffice
+        resources\views\theme\frontoffice\layouts
+        resources\views\theme\frontoffice\pages
+
+36. Crear archivos:
+    resources\views\theme\backoffice\layouts\admin.blade.php
+
+37. Copiar el contenido del archivo index.html de la plantilla descargada en el archivo 
+    admin.blade.php creado anteriormente y modificarla como se muestra a continuación:
+    ***
+
+38. Crear directorios:
+        public\assets
+        public\assets\backoffice
+        public\assets\backoffice\css
+        public\assets\frontoffice\js
+        public\assets\frontoffice
+        public\assets\frontoffice\css
+        public\assets\frontoffice\js
+        public\assets\plugins
+
+39. En el directorio public\assets\backoffice\css copiar todos los archivos css requeridos en 
+    resources\views\theme\backoffice\layouts\admin.blade.php de la plantilla descargada
+    anteriormente.
+
+40. Copiar el contenido de la carpeta vendor de la plantilla en public\assets\plugins
+
+41. En el directorio public\assets\backoffice\js copiar todos los archivos js requeridos en 
+    resources\views\theme\backoffice\layouts\admin.blade.php de la plantilla descargada
+    anteriormente.
+
+42. Crear resources\views\theme\backoffice\layouts\includes\head.blade.php
+    ***
+
+43. Crear resources\views\theme\backoffice\layouts\includes\loader.blade.php
+    ***
+
+44. Crear resources\views\theme\backoffice\layouts\includes\header.blade.php
+    ***
+
+45. Crear resources\views\theme\backoffice\layouts\includes\left-sidebar.blade.php
+    ***
+
+46. Crear resources\views\theme\backoffice\layouts\includes\footer.blade.php
+    ***
+
+47. Crear resources\views\theme\backoffice\layouts\includes\foot.blade.php
+    ***
+
+48. Crear vista resources\views\theme\backoffice\pages\demo.blade.php
+    ***
+
+49. Agregar una ruta demo en routes\web.php
+    Route::get('demo', function () {
+        return view('theme.backoffice.pages.demo');
+    });
+
+50. Pegar las carpeta fonts e images de la plantilla en public\assets y 
+    adecuar todas las rutas de imagenes y fuentes.
+
+ROLES Y PERMISOS
+51. Eliminar o comentar todas las rutas de routes\web.php, dejar solo:
+    Auth::routes(['verify' => true]);
+
+52. Agregar la siguiente ruta a routes\web.php, dejar solo:
+    Route::group(['middleware' => ['auth'], 'backoffice.'], function(){
+        Route::get('roles', 'RoleController@index');
+    });
+
+
+53. Modificar el método index del controlador app\Http\Controllers\RoleController.php
+    ***
+
+54. Crear policias relacionada con el modelo Role:
+    $ php artisan make:policy RolePolicy --model=Role
+
+55. Registrar policia en app\Providers\AuthServiceProvider.php
+    ****
+    protected $policies = [
+        ****
+        'App\Role' => 'App\Policies\RolePolicy'
+    ];
+    ****
+
+56. En la clase RolePolicy de la policia app\Policies\RolePolicy.php modificar el método create:
+    ***
+
+57. Crear carpeta resources\views\theme\backoffice\pages\role
+
+58. Crear archivo resources\views\theme\backoffice\pages\role\create.blade.php
+    Basado en Materialize (https://materializecss.com/)
+    ***
+
+59. Modificar el método create de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+
+60. Modificar el método store de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+
+61. Crear request para el método store del controlador Role:
+    $ php artisan make:request Role/StoreRequest
+
+62. Modificar el archivo app\Http\Requests\Role\StoreRequest.php
+    ***
+
+62. Añadir el siguiente código a app\Http\Controllers\RoleController.php:
+    use App\Http\Requests\Role\StoreRequest;
+
+27. Establecer almacenamiento de registros en app\Role.php:
+    ***
+
+
+*** 26/62 ***
+=======
+
+*** 13/62 ***
+
+>>>>>>> parent of d7f6918... Vistas
