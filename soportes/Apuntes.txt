@@ -296,81 +296,108 @@ VIDEO 14:
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Estructura roles y permisos" ***
 
-*** 13/62 ***
-------------------------------------------------------------------------------------------------------
+VIDEO 15:
+*** Introducción a framework materialize y al motor de plantillas blade de laravel ***
 
-
-
-
-
+VIDEO 16:
 VISTAS Y DISEÑO DE PLANTILLAS
-34. Descargar plantilla basada en el framework materialize en https://bit.ly/2NCb2rS
+=============================
+030. Descargar plantilla basada en el framework materialize en https://bit.ly/2NCb2rS
 
-35. Crear directorios:
-        resources\views\theme
-        resources\views\theme\backoffice
-        resources\views\theme\backoffice\layouts
-        resources\views\theme\backoffice\layouts\includes
-        resources\views\theme\backoffice\pages
-        resources\views\theme\frontoffice
-        resources\views\theme\frontoffice\layouts
-        resources\views\theme\frontoffice\pages
+031. Crear directorios:
+    resources\views\theme
+    resources\views\theme\backoffice
+    resources\views\theme\backoffice\layouts
+    resources\views\theme\backoffice\layouts\includes
+    resources\views\theme\backoffice\pages
+    resources\views\theme\frontoffice
+    resources\views\theme\frontoffice\layouts
+    resources\views\theme\frontoffice\pages
 
-36. Crear archivos:
+032. Crear archivos:
     resources\views\theme\backoffice\layouts\admin.blade.php
 
-37. Copiar el contenido del archivo index.html de la plantilla descargada en el archivo 
+033. Copiar el contenido del archivo index.html de la plantilla descargada en el archivo 
     admin.blade.php creado anteriormente y modificarla como se muestra a continuación:
     ***
+    ***
 
-38. Crear directorios:
-        public\assets
-        public\assets\backoffice
-        public\assets\backoffice\css
-        public\assets\frontoffice\js
-        public\assets\frontoffice
-        public\assets\frontoffice\css
-        public\assets\frontoffice\js
-        public\assets\plugins
+VIDEO 17:
+*** Adaptación del archivo index.html de la plantilla de materialize a nuestro proyecto ***
+*** soportes\template\index.html ***
 
-39. En el directorio public\assets\backoffice\css copiar todos los archivos css requeridos en 
+VIDEO 18:
+034. Crear directorios:
+    public\assets
+    public\assets\backoffice
+    public\assets\backoffice\css
+    public\assets\frontoffice\js
+    public\assets\frontoffice
+    public\assets\frontoffice\css
+    public\assets\frontoffice\js
+    public\assets\plugins
+
+
+035. En el directorio public\assets\backoffice\css copiar todos los archivos css requeridos en 
     resources\views\theme\backoffice\layouts\admin.blade.php de la plantilla descargada
     anteriormente.
 
-40. Copiar el contenido de la carpeta vendor de la plantilla en public\assets\plugins
+036. Copiar el contenido de la carpeta vendor de la plantilla en public\assets\plugins
 
-41. En el directorio public\assets\backoffice\js copiar todos los archivos js requeridos en 
+037. En el directorio public\assets\backoffice\js copiar todos los archivos js requeridos en 
     resources\views\theme\backoffice\layouts\admin.blade.php de la plantilla descargada
     anteriormente.
 
-42. Crear resources\views\theme\backoffice\layouts\includes\head.blade.php
+VIDEO 19:
+038. Crear resources\views\theme\backoffice\layouts\includes\head.blade.php
+    ***
     ***
 
-43. Crear resources\views\theme\backoffice\layouts\includes\loader.blade.php
+039. Crear resources\views\theme\backoffice\layouts\includes\loader.blade.php
+    ***
     ***
 
-44. Crear resources\views\theme\backoffice\layouts\includes\header.blade.php
+040. Crear resources\views\theme\backoffice\layouts\includes\header.blade.php
+    ***
     ***
 
-45. Crear resources\views\theme\backoffice\layouts\includes\left-sidebar.blade.php
+041. Crear resources\views\theme\backoffice\layouts\includes\left-sidebar.blade.php
+    ***
     ***
 
-46. Crear resources\views\theme\backoffice\layouts\includes\footer.blade.php
+042. Crear resources\views\theme\backoffice\layouts\includes\footer.blade.php
     ***
 
-47. Crear resources\views\theme\backoffice\layouts\includes\foot.blade.php
+043. Crear resources\views\theme\backoffice\layouts\includes\foot.blade.php
+    ***
     ***
 
-48. Crear vista resources\views\theme\backoffice\pages\demo.blade.php
+VIDEO 20:
+*** Insertar yield en resources\views\theme\backoffice\layouts\admin.blade.php ***
+*** Insertar yield en resources\views\theme\backoffice\layouts\head.blade.php ***
+
+044. Crear vista resources\views\theme\backoffice\pages\demo.blade.php
+    ***
     ***
 
-49. Agregar una ruta demo en routes\web.php
+045. Agregar una ruta demo en routes\web.php
     Route::get('demo', function () {
         return view('theme.backoffice.pages.demo');
     });
 
-50. Pegar las carpeta fonts e images de la plantilla en public\assets y 
-    adecuar todas las rutas de imagenes y fuentes.
+VIDEO 21:
+*** Pegar las carpeta fonts e images de la plantilla en public\assets y ***
+*** adecuar todas las rutas de imagenes y fuentes. ***
+
+*** COMMIT 6: "Vistas y diseño de plantillas" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Vistas y diseño de plantillas" ***
+
+VIDEO 22:
+
+*** 21/62 ***
+------------------------------------------------------------------------------------------------------
+
 
 ROLES Y PERMISOS
 51. Eliminar o comentar todas las rutas de routes\web.php, dejar solo:
