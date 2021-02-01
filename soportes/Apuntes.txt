@@ -13,7 +13,9 @@ GENERAR NUEVO PROYECTO LARAVEL
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Proyecto Laravel 5.7 nuevo" ***
 
-VIDEO 02: *** Instalación de Laravel ***
+VIDEO 02: 
+*** Instalación de Laravel ***
+
 VIDEO 03:
 CREAR UN HOST VIRTUAL
 =====================
@@ -140,28 +142,27 @@ VIDEO 07:
 *** Guardar archivos en repositorio: $ git commit -m "Verificación de email" ***
 
 VIDEO 08:
+*** Configuración de Desktop GitHub: ***
+*** Descargar Desktop GitHub en https://desktop.github.com e instalar ***
+*** En caso de haber iniciado el repositorio: $ git init ***
+*** Ejecutar Desktop GitHub y añadir el repositorio del proyecto ***
 
-*** 7/62 ***
-------------------------------------------------------------------------------------------------------
+VIDEO 09:
+*** Establecer diagrama E-R para la estructura de roles y permisos. Parte I ***
 
-
-
-CONFIGURACIÓN DE DESKTOP GITHUB
-20. Descargar Desktop GitHub en https://desktop.github.com e instalar.
-
-21. Iniciar repositorio:
-    $ git init
-
-22. Ejecutar Desktop GitHub y añadir el repositorio creado anteriormente en local.
+VIDEO 10:
+*** Establecer diagrama E-R para la estructura de roles y permisos. Parte II ***
 
 ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
-23. Crear migración junto con su modelo de la tabla roles:
+===========================================
+018. Crear migración junto con su modelo de la tabla roles:
     $ php artisan make:model Role -m -c -r
 
-24. Crear migración junto con su modelo de la tabla permissions:
+VIDEO 11:
+019. Crear migración junto con su modelo de la tabla permissions:
     $ php artisan make:model Permission -m -c -r
 
-25. Modificar el método up en database\migrations\2021_01_12_024639_create_roles_table.php 
+020. Modificar el método up en database\migrations\2021_01_31_192808_create_roles_table.php
     para agregar campos a la table roles:
     public function up()
     {
@@ -174,7 +175,8 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         });
     }
 
-26. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Role.php:
+VIDEO 12:
+021. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Role.php:
     ****
     class Role extends Model
     {
@@ -186,16 +188,17 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         // RELACIONES ENTRE LOS MODELOS
         public function permissions(){
             // Relación uno a muchos
-            return $this->hasMany('App\Permission');
+            return $this->hasMany('app\Permission');
         }
 
         public function users(){
             // Relación muchos a muchos
-            return $this->belongsToMany('App\User');
+            return $this->belongsToMany('app\User');
         }
     ****
 
-27. Modificar el método up en database\migrations\2021_01_12_031035_create_permissions_table.php 
+VIDEO 13:
+022. Modificar el método up en database\migrations\2021_01_31_193703_create_permissions_table.php 
     para agregar campos a la table permissions:
     public function up()
     {
@@ -210,7 +213,7 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         });
     }
 
-28. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Permission.php:
+023. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Permission.php:
     ****
     class Permission extends Model
     {
@@ -231,7 +234,7 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         }
     ****
 
-28. Establecer las relaciones entre modelos en app\User.php:
+024. Establecer las relaciones entre modelos en app\User.php:
     ****
     class User extends Authenticatable implements MustVerifyEmail
     {
@@ -239,19 +242,23 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         // RELACIONES ENTRE LOS MODELOS
         public function permissions(){
             // Relación muchos a muchos
-            return $this->belongsToMany('App\Permission');
+            return $this->belongsToMany('app\Permission');
         }
 
         public function roles(){
             // Relación muchos a muchos
-            return $this->belongsToMany('App\Role')->withTimestamps();
+            return $this->belongsToMany('app\Role')->withTimestamps();
         }
     ****
 
-29. Crear tabla pivote en la migración para role_user:
+VIDEO 14:
+025. Crear tabla pivote en la migración para role_user:
     $ php artisan make:migration create_role_user_table --create=role_user
 
-30. Modificar el método up en database\migrations\2021_01_12_134553_create_role_user_table.php
+026. Crear tabla pivote en la migración para permission_user:
+    $ php artisan make:migration create_permission_user_table --create=permission_user
+
+027. Modificar el método up en database\migrations\2021_02_01_140320_create_role_user_table.php
     para agregar campos y restricciones a la table role_user:
     public function up()
     {
@@ -265,10 +272,7 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         });
     }
 
-31. Crear tabla pivote en la migración para permission_user:
-    $ php artisan make:migration create_permission_user_table --create=permission_user
-
-32. Modificar el método up en database\migrations\2021_01_12_141953_create_permission_user_table.php
+028. Modificar el método up en database\migrations\2021_02_01_140535_create_permission_user_table.php
     para agregar campos y restricciones a la table permission_user:
     public function up()
     {
@@ -282,10 +286,23 @@ ESTRUCTURA PARA SISTEMA DE ROLES Y PERMISOS
         });
     }
 
-33. Ejecutar migración:
+029. Ejecutar migración:
     $ php artisan migrate
 
-<<<<<<< HEAD
+*** En caso de querer deshacer la migración ejecutar: ***
+*** $ php artisan migrate:rollback ***
+
+*** COMMIT 5: "Estructura para sistema de roles y permisos" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Estructura roles y permisos" ***
+
+*** 13/62 ***
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
 VISTAS Y DISEÑO DE PLANTILLAS
 34. Descargar plantilla basada en el framework materialize en https://bit.ly/2NCb2rS
 
@@ -405,13 +422,5 @@ ROLES Y PERMISOS
 62. Añadir el siguiente código a app\Http\Controllers\RoleController.php:
     use App\Http\Requests\Role\StoreRequest;
 
-27. Establecer almacenamiento de registros en app\Role.php:
+63. Establecer almacenamiento de registros en app\Role.php:
     ***
-
-
-*** 26/62 ***
-=======
-
-*** 13/62 ***
-
->>>>>>> parent of d7f6918... Vistas
