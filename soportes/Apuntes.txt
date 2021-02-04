@@ -177,7 +177,7 @@ VIDEO 11:
 
 VIDEO 12:
 021. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Role.php:
-    ****
+    ***
     class Role extends Model
     {
         // ATRIBUTOS DE ASIGNACIÓN MASIVA
@@ -195,7 +195,7 @@ VIDEO 12:
             // Relación muchos a muchos
             return $this->belongsToMany('app\User');
         }
-    ****
+    ***
 
 VIDEO 13:
 022. Modificar el método up en database\migrations\2021_01_31_193703_create_permissions_table.php 
@@ -214,7 +214,7 @@ VIDEO 13:
     }
 
 023. Establecer los atributos de asignación masiva y relaciones entre modelos en app\Permission.php:
-    ****
+    ***
     class Permission extends Model
     {
         // ATRIBUTOS DE ASIGNACIÓN MASIVA
@@ -232,13 +232,13 @@ VIDEO 13:
             // Relación muchos a muchos
             return $this->belongsToMany('App\User')->withTimestamps();
         }
-    ****
+    ***
 
 024. Establecer las relaciones entre modelos en app\User.php:
-    ****
+    ***
     class User extends Authenticatable implements MustVerifyEmail
     {
-    ****
+    ***
         // RELACIONES ENTRE LOS MODELOS
         public function permissions(){
             // Relación muchos a muchos
@@ -249,7 +249,7 @@ VIDEO 13:
             // Relación muchos a muchos
             return $this->belongsToMany('app\Role')->withTimestamps();
         }
-    ****
+    ***
 
 VIDEO 14:
 025. Crear tabla pivote en la migración para role_user:
@@ -394,60 +394,179 @@ VIDEO 21:
 *** Guardar archivos en repositorio: $ git commit -m "Vistas y diseño de plantillas" ***
 
 VIDEO 22:
-
-*** 21/62 ***
-------------------------------------------------------------------------------------------------------
-
-
-ROLES Y PERMISOS
-51. Eliminar o comentar todas las rutas de routes\web.php, dejar solo:
+CRUD ROLES Y PERMISOS
+=====================
+046. Eliminar o comentar todas las rutas de routes\web.php, dejar solo:
     Auth::routes(['verify' => true]);
 
-52. Agregar la siguiente ruta a routes\web.php, dejar solo:
-    Route::group(['middleware' => ['auth'], 'backoffice.'], function(){
-        Route::get('roles', 'RoleController@index');
+*** Para ver las rutas existentes escribir ***
+*** $ php artisan rout:list ***
+
+047. Agregar la siguiente ruta a routes\web.php:
+    // Grupo de rutas del backoffice
+    Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
+        // Route::get('role', 'RoleController@index')->name('role.index');
+        Route::resource('role', 'RoleController');
     });
 
-
-53. Modificar el método index del controlador app\Http\Controllers\RoleController.php
+048. Modificar el método index del controlador app\Http\Controllers\RoleController.php
+    ***
     ***
 
-54. Crear policias relacionada con el modelo Role:
+VIDEO 23:
+049. Crear policia relacionada con el modelo Role:
     $ php artisan make:policy RolePolicy --model=Role
 
-55. Registrar policia en app\Providers\AuthServiceProvider.php
-    ****
-    protected $policies = [
-        ****
-        'App\Role' => 'App\Policies\RolePolicy'
-    ];
-    ****
-
-56. En la clase RolePolicy de la policia app\Policies\RolePolicy.php modificar el método create:
+050. Registrar policia en app\Providers\AuthServiceProvider.php
+    ***
+    class AuthServiceProvider extends ServiceProvider
+    {
+        ***
+        protected $policies = [
+            //'App\Model' => 'App\Policies\ModelPolicy',
+            'App\Role' => 'App\Policies\RolePolicy',
+        ];
     ***
 
-57. Crear carpeta resources\views\theme\backoffice\pages\role
+051. En la clase RolePolicy de la policia app\Policies\RolePolicy.php modificar el método create:
+    ***
+    ***
 
-58. Crear archivo resources\views\theme\backoffice\pages\role\create.blade.php
+VIDEO 24:
+*** Diseño del formulario resources\views\theme\backoffice\pages\role\create.blade.php (Parte I) ***
+052. Crear carpeta resources\views\theme\backoffice\pages\role
+
+053. Crear archivo resources\views\theme\backoffice\pages\role\create.blade.php
     Basado en Materialize (https://materializecss.com/)
     ***
-
-59. Modificar el método create de la clase RoleController del controlador
-    app\Http\Controllers\RoleController.php
     ***
 
-60. Modificar el método store de la clase RoleController del controlador
+054. Modificar el método create de la clase RoleController del controlador
     app\Http\Controllers\RoleController.php
     ***
+    ***
 
-61. Crear request para el método store del controlador Role:
+VIDEO 25:
+*** Diseño del formulario resources\views\theme\backoffice\pages\role\create.blade.php (Parte II) ***
+
+055. Modificar el método store de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+    ***
+
+VIDEO 26:
+*** Configuración de Role/StoreRequest ***
+
+056. Crear request para el método store del controlador Role:
     $ php artisan make:request Role/StoreRequest
 
-62. Modificar el archivo app\Http\Requests\Role\StoreRequest.php
+057. Modificar el archivo app\Http\Requests\Role\StoreRequest.php
+    ***
     ***
 
-62. Añadir el siguiente código a app\Http\Controllers\RoleController.php:
+058. Añadir el siguiente código en 'use' a app\Http\Controllers\RoleController.php:
     use App\Http\Requests\Role\StoreRequest;
 
-63. Establecer almacenamiento de registros en app\Role.php:
+VIDEO 27:
+059. Establecer almacenamiento de registros en app\Role.php creando el método store:
     ***
+    ***
+
+VIDEO 28:
+060. Crear archivo resources\views\theme\backoffice\pages\role\show.blade.php
+    Basado en Materialize (https://materializecss.com/)
+    ***
+    ***
+
+VIDEO 29:
+*** Rediseño del método index del controlador app\Http\Controllers\RoleController.php ***
+
+061. Crear archivo resources\views\theme\backoffice\pages\role\index.blade.php
+    Basado en Materialize (https://materializecss.com/)
+    ***
+    ***
+
+VIDEO 30:
+061. Crear archivo resources\views\theme\backoffice\pages\role\edit.blade.php
+    Basado en Materialize (https://materializecss.com/)
+    ***
+    ***
+
+062. Modificar el método edit de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+    ***
+
+063. Modificar el método update de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+    ***
+
+VIDEO 31:
+064. Crear request para el método update del controlador Role:
+    $ php artisan make:request Role/UpdateRequest
+
+065. Modificar el archivo app\Http\Requests\Role\UpdateRequest.php
+    ***
+    ***
+
+066. Añadir el siguiente código en 'use' a app\Http\Controllers\RoleController.php:
+    use App\Http\Requests\Role\UpdateRequest;
+
+VIDEO 32:
+*** Culminación del diseño del método update del controlador app\Http\Controllers\RoleController.php ***
+
+067. Establecer actualización de registros en app\Role.php creando el método my_update:
+    ***
+    ***
+
+VIDEO 33:
+*** Inducción a la Libreria SweetAlert ***
+*** https://github.com/realrashid/sweet-alert ***
+*** https://realrashid.github.io/sweet-alert/ ***
+*** https://github.com/sweetalert2/sweetalert2 ***
+*** https://sweetalert2.github.io/ ***
+
+068. Instalación de la Libreria SweetAlert:
+    $ composer require realrashid/sweet-alert
+
+*** Se incorpora @include('sweetalert::alert') ***
+*** en resources\views\theme\backoffice\layouts\includes\foot.blade.php ***
+
+069. Para configurar la Libreria SweetAlert:
+    $ php artisan sweetalert:publish
+
+070. Incorporar en app\Role.php
+    Use Alert;
+
+VIDEO 34:
+*** Como invocar la libreria SweetAlert de forma local ***
+
+VIDEO 35:
+*** Adecuación del archivo resources\views\theme\backoffice\pages\role\show.blade.php ***
+*** para eliminar registro ***
+
+VIDEO 36:
+071. Modificar el método destroy de la clase RoleController del controlador
+    app\Http\Controllers\RoleController.php
+    ***
+    ***
+
+VIDEO 37:
+*** Observaciones a ciertas estandarizaciones de Materialize ***
+*** Vaciar table roles ***
+
+072. Crear archivo resources\views\theme\backoffice\layouts\includes\breadcrumbs.blade.php
+    Basado en Materialize (https://materializecss.com/)
+    ***
+    ***
+
+*** COMMIT 7: "CRUD de roles y permisos" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "CRUD de roles y permisos" ***
+
+VIDEO 38:
+
+
+
+*** 37/62 ***
