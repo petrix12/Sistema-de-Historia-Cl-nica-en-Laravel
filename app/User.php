@@ -40,11 +40,11 @@ class User extends Authenticatable implements MustVerifyEmail
     // RELACIONES ENTRE LOS MODELOS
     public function permissions(){
         // Relación muchos a muchos
-        return $this->belongsToMany('app\Permission');
+        return $this->belongsToMany('App\Permission');
     }
 
     public function roles(){
         // Relación muchos a muchos
-        return $this->belongsToMany('app\Role')->withTimestamps();
+        return $this->belongsToMany('App\Role')->withTimestamps();
     }
 }

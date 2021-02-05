@@ -394,8 +394,8 @@ VIDEO 21:
 *** Guardar archivos en repositorio: $ git commit -m "Vistas y diseño de plantillas" ***
 
 VIDEO 22:
-CRUD ROLES Y PERMISOS
-=====================
+CRUD ROLES
+==========
 046. Eliminar o comentar todas las rutas de routes\web.php, dejar solo:
     Auth::routes(['verify' => true]);
 
@@ -561,12 +561,142 @@ VIDEO 37:
     ***
     ***
 
-*** COMMIT 7: "CRUD de roles y permisos" ***
+*** COMMIT 7: "CRUD de roles" ***
 *** Añadir archivos a la zona index: $ git add .
-*** Guardar archivos en repositorio: $ git commit -m "CRUD de roles y permisos" ***
+*** Guardar archivos en repositorio: $ git commit -m "CRUD de roles" ***
 
 VIDEO 38:
+*** Repaso de la estructura y documentación del proyecto ***
+
+VIDEO 39:
+CRUD PERMISOS
+=============
+073. Definir ruta en grupo de backoffice del archivo routes\web.php
+    ***
+    // Grupo de rutas del backoffice
+    Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
+        ***
+        Route::resource('permission', 'PermissionController');
+    });
+    ***
+
+074. Crear policia relacionada con el modelo Permission:
+    $ php artisan make:policy PermissionPolicy --model=Permission
+
+075. Registrar policia del modelo Permission en app\Providers\AuthServiceProvider.php
+    ***
+    protected $policies = [
+        ***
+        'App\Permission' => 'App\Policies\PermissionPolicy',
+    ];
+    ***
+
+076. Crear directorio resources\views\theme\backoffice\pages\permission
+
+077. Crear los archivos de vistas del CRUD permisos:
+    resources\views\theme\backoffice\pages\permission\create.blade.php
+    resources\views\theme\backoffice\pages\permission\edit.blade.php
+    resources\views\theme\backoffice\pages\permission\index.blade.php
+    resources\views\theme\backoffice\pages\permission\show.blade.php
+
+VIDEO 40:
+*** Trabajar vista y método create de permisos ***
+
+078. Modificar el método create del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+079. Editar vista resources\views\theme\backoffice\pages\permission\create.blade.php
+    ***
+    ***
+
+080. Modificar el método store del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+VIDEO 41:
+081. Crear request para el método store del controlador Permission:
+    $ php artisan make:request Permission/StoreRequest
+
+082. Incluir llamada del request en el controlador app\Http\Controllers\PermissionController.php
+    use App\Http\Requests\Permission\StoreRequest;
+
+083. Agregar método store al modelo app\Permission.php
+    ***
+    ***
+
+084. Modificar el método authorize de la clase app\Http\Requests\Permission\StoreRequest.php
+    ***
+    ***
+
+085. Editar el archivo app\Http\Requests\Permission\StoreRequest.php
+    ***
+    ***
+
+VIDEO 42:
+086. Modificar el método show del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+087. Editar resources\views\theme\backoffice\pages\permission\show.blade.php
+    ***
+    ***
+
+VIDEO 43:
+088. Modificar el método index del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+089. Editar resources\views\theme\backoffice\pages\permission\index.blade.php
+    ***
+    ***
+
+VIDEO 44: 
+090. Modificar el método edit del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+091. Editar resources\views\theme\backoffice\pages\permission\edit.blade.php
+    ***
+    ***
+
+092. Añadir clase Role al controlador app\Http\Controllers\PermissionController.php
+    use App\Role;
+
+093. Modificar el método update del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+VIDEO 45:
+094. Establecer actualización de registros en app\Permissin.php creando el método my_update:
+    ***
+    ***
+
+VIDEO 46:
+095. Crear request para el método update del controlador Permission:
+    $ php artisan make:request Permission/UpdateRequest
+
+096. Modificar el archivo app\Http\Requests\Permission\UpdateRequest.php
+    ***
+    ***
+
+097. Añadir el siguiente código en 'use' a app\Http\Controllers\PermissionController.php:
+    use App\Http\Requests\Permission\UpdateRequest;
+
+VIDEO 47:
+098. Modificar el método destroy del controlador app\Http\Controllers\PermissionController.php
+    ***
+    ***
+
+*** COMMIT 8: "CRUD de permisos" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "CRUD de permisos" ***
+
+VIDEO 48:
+ASIGNACIÓN DE ROLES Y PERMISOS PARA USUARIOS
+============================================
 
 
 
-*** 37/62 ***
+
+*** 47/62 ***

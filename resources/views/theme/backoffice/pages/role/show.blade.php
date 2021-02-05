@@ -1,6 +1,6 @@
 @extends('theme.backoffice.layouts.admin')
 
-@section('title', 'Mostrar rol')
+@section('title', $role->name)
 
 @section('head')
 @endsection
@@ -26,12 +26,39 @@
                                 <a href="{{ route('backoffice.role.edit', $role) }}">EDITAR</a>
                                 <a href="#" style="color: red" onclick="enviar_formulario()">ELIMINAR</a>
                             </div>
-                            {{-- <ul>
-                                <li>Pedro Jesús</li>
-                                <li>José Luis</li>
-                                <li>Miguel Ángel</li>
-                            </ul> --}}
                         </div>
+                    </div>
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="col s12 m8 offset-m2">
+                                <div class="card-panel">
+                                    <h4 class="header2">Permisos del rol</h4>
+            
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Slug</th>
+                                                <th>Descripción</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($permissions as $permission)
+                                            <tr>
+                                                <td><a href="{{ route('backoffice.permission.show', $permission) }}">{{ $permission->name }}</a></td>
+                                                <td>{{ $permission->slug }}</td>
+                                                <td>{{ $permission->description }}</td>
+                                                <td><a href="{{ route('backoffice.permission.edit', $permission) }}">Editar</a></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

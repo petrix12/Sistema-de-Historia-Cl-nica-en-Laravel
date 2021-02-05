@@ -16,12 +16,12 @@ class Role extends Model
     // RELACIONES ENTRE LOS MODELOS
     public function permissions(){
         // Relación uno a muchos
-        return $this->hasMany('');
+        return $this->hasMany('App\Permission');
     }
 
     public function users(){
         // Relación muchos a muchos
-        return $this->belongsToMany('app\User');
+        return $this->belongsToMany('App\User');
     }
 
     // ALMACENAMIENTO
