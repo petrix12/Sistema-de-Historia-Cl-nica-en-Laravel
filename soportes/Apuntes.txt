@@ -254,9 +254,15 @@ VIDEO 13:
 VIDEO 14:
 025. Crear tabla pivote en la migración para role_user:
     $ php artisan make:migration create_role_user_table --create=role_user
+    NOTA: incluir en la migración los campos:
+    role_id	int(10)
+    user_id	int(10)
 
 026. Crear tabla pivote en la migración para permission_user:
     $ php artisan make:migration create_permission_user_table --create=permission_user
+    NOTA: incluir en la migración los campos:
+    permission_id	int(10)
+    user_id	int(10)
 
 027. Modificar el método up en database\migrations\2021_02_01_140320_create_role_user_table.php
     para agregar campos y restricciones a la table role_user:
@@ -693,10 +699,119 @@ VIDEO 47:
 *** Guardar archivos en repositorio: $ git commit -m "CRUD de permisos" ***
 
 VIDEO 48:
-ASIGNACIÓN DE ROLES Y PERMISOS PARA USUARIOS
-============================================
+*** Vaciar tablas de roles y permisos de la BD clinic ***
+
+ASIGNACIÓN DE ROLES A USUARIOS
+==============================
+099. Crear rol de administrador:
+    Rol: Administrador
+    Descripción: Este es el rol que tiene todos los permisos dentro del sistema
+
+VIDEO 49:
+100. Crear controlador para el modelo app\User.php
+    $ php artisan make:controller UserController -r
+
+101. Crear carpeta resources\views\theme\backoffice\pages\user
+
+102. Crear los archivos de vistas del CRUD usuarios:
+    resources\views\theme\backoffice\pages\user\create.blade.php
+    resources\views\theme\backoffice\pages\user\edit.blade.php
+    resources\views\theme\backoffice\pages\user\index.blade.php
+    resources\views\theme\backoffice\pages\user\show.blade.php
+
+103. Editar resources\views\theme\backoffice\pages\user\index.blade.php
+    ***
+    ***
+
+104. Modificar el método index del controlador app\Http\Controllers\UserController.php
+    ***
+    ***
+
+105. Agregar el la cabecera el modelo de usuario en el controlador app\Http\Controllers\UserController.php
+    use App\User;
+
+106. Definir grupo de rutas para el CRUD de usuarios en routes\web.php
+    ***
+    // Grupo de rutas del backoffice
+    Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
+        ***
+        Route::resource('user', 'UserController');
+    });
+    ***
+
+VIDEO 50:
+107. Editar resources\views\theme\backoffice\pages\user\show.blade.php
+    ***
+    ***
+
+108. Modificar el método show del controlador app\Http\Controllers\UserController.php
+    ***
+    ***
+
+VIDEO 51:
+109. Crear directorio resources\views\theme\backoffice\pages\user\includes
+
+110. Crear plantilla resources\views\theme\backoffice\pages\user\includes\user_nav.blade.php
+    ***
+    ***
+
+111. Crear método (assign_role) para mostrar formulario para asignar rol en el controlador
+    app\Http\Controllers\UserController.php
+    ***
+    ***
+
+112. Crear método (role_assignment) para asignar los roles en la bd en el controlador
+    app\Http\Controllers\UserController.php
+    ***
+    ***
+
+113. Crear vista resources\views\theme\backoffice\pages\user\assign_role.blade.php
+    ***
+    ***
+
+VIDEO 52:
+114. Crear ruta para la asignación de roles en routes\web.php
+    ***
+    Route::resource('user', 'UserController');
+    Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');
+    Route::resource('role', 'RoleController');
+    ***
+
+115. Crear ruta para guardar la asignación de roles en la bd en routes\web.php
+    ***
+    Route::get('user/{user}/assign_role', 'UserController@assign_role')->name('user.assign_role');
+    Route::post('user/{user}/role_assignment', 'UserController@role_assignment')->name('user.role_assignment');
+    Route::resource('role', 'RoleController');
+    ***
+
+VIDEO 53:
+116. Crear rol paciente:
+    Nombre: Paciente
+    Descripción: Rol predeterminado del sistema
+
+117. Crear rol medico:
+    Nombre: Medico
+    Descripción: Atiende a pacientes
+
+118. Agregar el la cabecera el modelo de rol en el controlador app\Http\Controllers\UserController.php
+    use App\Role;
+
+VIDEO 54:
+NOTA: Si en la migración respectiva no creaste los campos de claves foraneas para la tabla role_user,
+    entonces crear los siguientes campos:
+    role_id	int(10)
+    user_id	int(10)
+
+VIDEO 55:
+119. Crear método de validación has_role en el modelo app\User.php
+    ***
+    ***
+
+*** COMMIT 9: "Asignación de roles a usuarios" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Asignación de roles a usuarios" ***
+
+VIDEO 56:
 
 
-
-
-*** 47/62 ***
+*** 55/62 ***
