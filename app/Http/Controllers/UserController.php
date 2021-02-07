@@ -108,6 +108,7 @@ class UserController extends Controller
 
         // Asignación de roles
         $user->roles()->sync($request->roles);
+        $user->verify_permission_integrity();
         alert('Éxito', 'Roles asignados', 'success');
         return redirect()->route('backoffice.user.show', $user);
     }

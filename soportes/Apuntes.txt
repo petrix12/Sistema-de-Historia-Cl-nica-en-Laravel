@@ -896,6 +896,10 @@ CONFIGURACIÓN PARA EL ROL ADMINISTRADOR
 VIDEO 60:
 INTEGRIDAD EN LOS PERMISOS
 ==========================
+129. Crear métod verify_permission_integrity en el módelo app\User.php
+    ***
+    ***
+
 
 
 *** COMMIT 12: "Integridad en los permisos" ***

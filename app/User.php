@@ -77,4 +77,15 @@ class User extends Authenticatable implements MustVerifyEmail
     // RECUPERACIÓN DE INFORMACIÓN
 
     // OTRAS OPERACIONES
+    public function verify_permission_integrity(){
+        $permissions = $this->permissions;
+        foreach($permissions as $permission){
+            // Si este usuario no tiene el rol del permiso
+            if(!$this->has_role($permission->role->id)){
+                // Entonces le quitamos el permiso
+                $this->permissions()->detach($permission->id);
+            }
+
+        }
+    }
 }
