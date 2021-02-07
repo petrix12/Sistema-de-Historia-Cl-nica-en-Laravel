@@ -812,6 +812,67 @@ VIDEO 55:
 *** Guardar archivos en repositorio: $ git commit -m "Asignación de roles a usuarios" ***
 
 VIDEO 56:
+ASIGNACIÓN DE PERMISOS
+======================
+
+120. Crear ruta para la asignación de permisos en routes\web.php
+    ***
+    Route::post('user/{user}/role_assignment', 'UserController@role_assignment')->name('user.role_assignment');
+    Route::get('user/{user}/assign_permission', 'UserController@assign_permission')->name('user.assign_permission');
+    Route::resource('role', 'RoleController');
+    ***
+
+121. Crear ruta para guardar la asignación de permisos en la bd en routes\web.php
+    ***
+    Route::get('user/{user}/assign_permission', 'UserController@assign_permission')->name('user.assign_permission');
+    Route::post('user/{user}/permission_assignment', 'UserController@permission_assignment')->name('user.permission_assignment');
+    Route::resource('role', 'RoleController');
+    ***
+
+122. Crear método (assign_permission) para mostrar formulario para asignar permisos en el controlador
+    app\Http\Controllers\UserController.php
+    ***
+    ***
+
+123. Crear método (permission_assignment) para asignar los permisos en la bd en el controlador
+    app\Http\Controllers\UserController.php
+    ***
+    ***
+
+VIDEO 57:
+*** Reeditando resources\views\theme\backoffice\pages\user\assign_permission.blade.php ***
+*** Reeditando app\Http\Controllers\UserController.php ***
+
+VIDEO 58:
+NOTA: Si en la migración respectiva no creaste los campos de claves foraneas para la tabla permission_user,
+    entonces crear los siguientes campos:
+    permission_id	int(10)
+    user_id	int(10)
+
+124. Crear los siguientes permisos:
+    Nombre: admin_1
+    Rol: Administrador
+    Descripción: ...
+
+    Nombre: admin_2
+    Rol: Administrador
+    Descripción: ...
+
+    Nombre: admin_3
+    Rol: Administrador
+    Descripción: ...
+
+    NOTA: Y siguiendo la misma tónica, crear tres permisos por cada rol.
+
+125. Crear método de validación has_permission en el modelo app\User.php
+    ***
+    ***
 
 
-*** 55/62 ***
+
+*** COMMIT 10: "Asignación de permisos" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Asignación de permisos" ***
+
+
+*** 57/62 ***

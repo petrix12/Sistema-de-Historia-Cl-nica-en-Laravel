@@ -58,6 +58,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function has_permission($id){
+        foreach($this->permissions as $permission){
+            if ($permission->id == $id || $permission->slug == $id) return true;
+        }
+        return false;
+    }
+
     // RECUPERACIÓN DE INFORMACIÓN
 
     // OTRAS OPERACIONES
