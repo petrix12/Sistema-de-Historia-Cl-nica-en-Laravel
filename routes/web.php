@@ -17,12 +17,6 @@ Auth::routes(['verify' => true]);
     return view('welcome');
 }); */
 
-/* Route::get('demo', function () {
-    return view('theme.backoffice.pages.demo');
-}); */
-
-/* Route::get('/home', 'HomeController@index')->name('home'); */
-
 // Grupo de rutas del backoffice
 Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
     // Route::get('role', 'RoleController@index')->name('role.index');
@@ -39,3 +33,24 @@ Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
     
     Route::resource('permission', 'PermissionController');
 });
+
+
+// *** PRUEBAS *** //
+/* Route::get('demo', function () {
+    return view('theme.backoffice.pages.demo');
+}); */
+
+/* Route::get('/home', 'HomeController@index')->name('home'); */
+
+/* Route::get('test', function(){
+    dd(config('app.admin_role'));
+}); */
+
+/* Route::get('test', function(){
+    $user = auth()->user();
+    if($user->is_admin()){
+        dd("Es administrador");
+    }else{
+        dd("No es administrador");
+    }
+}); */

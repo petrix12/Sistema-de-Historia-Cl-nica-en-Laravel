@@ -51,6 +51,15 @@ class User extends Authenticatable implements MustVerifyEmail
     // ALMACENAMIENTO
 
     // VALIDACIÓN
+    public function is_admin(){
+        $admin = config('app.admin_role');
+        if($this->has_role($admin)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function has_role($id){
         foreach($this->roles as $role){
             if ($role->id == $id || $role->slug == $id) return true;

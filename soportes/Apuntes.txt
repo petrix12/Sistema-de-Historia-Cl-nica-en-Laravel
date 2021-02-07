@@ -868,11 +868,40 @@ NOTA: Si en la migración respectiva no creaste los campos de claves foraneas pa
     ***
     ***
 
-
-
 *** COMMIT 10: "Asignación de permisos" ***
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Asignación de permisos" ***
 
+VIDEO 59:
+CONFIGURACIÓN PARA EL ROL ADMINISTRADOR
+=======================================
+126. Editar el archivo .env y escribir en la última línea:
+    ADMIN_ROLE=administrador
 
-*** 57/62 ***
+127. Editar el archivo config\app.php
+    <?php
+
+    return [
+        'admin_role' => env('ADMIN_ROLE', 'admin'),
+    ***
+
+128. Agregar el método de validación is_admin en el modelo app\User.php
+    ***
+    ***
+
+*** COMMIT 11: "Configuración rol administrador" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Configuración rol administrador" ***
+
+VIDEO 60:
+INTEGRIDAD EN LOS PERMISOS
+==========================
+
+
+*** COMMIT 12: "Integridad en los permisos" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Integridad en los permisos" ***
+
+
+
+*** 59/62 ***
