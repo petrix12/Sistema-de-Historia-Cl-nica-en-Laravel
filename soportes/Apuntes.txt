@@ -920,10 +920,45 @@ ASIGNACIÓN MASIVA DE PERMISO A ROLES
 *** Guardar archivos en repositorio: $ git commit -m "Asignación masiva de permisos a roles" ***
 
 VIDEO 62:
-CRUD DE USUARIOS
-================
+ASIGNACIÓN DE ROL POR DEFECTO
+=============================
+
+132. Crear ruta welcome en routes\web.php
+    ***
+    ***
+
+133. Crear ruta home en routes\web.php
+    ***
+    ***
+
+134. Modificar el métod create del controlador app\Http\Controllers\Auth\RegisterController.php
+    ***
+    ***
+
+135. Registrar un nuevo usuario:
+    Nombre: Nuevo usuario
+    Correo: nuevo@usuario.com
+
+    NOTA: Autenticar el usuario con la cuenta de Mailtrap creada al inicio.
+
+136. Editar el archivo .env y escribir en la última línea:
+    PATIENT_ROLE=paciente
+
+137. Editar el archivo config\app.php
+    <?php
+
+    return [
+        'admin_role' => env('ADMIN_ROLE', 'admin'),
+        'patient_role' => env('PATIENT_ROLE', 'paciente'),
+    ***
+
+*** COMMIT 14: "Asignación de rol por defecto" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Asignación de rol por defecto" ***
+
+*** Creamos un nuevo repositorio en https://github.com. Le damos el nombre: Sistema de Historia Clínica en Laravel ***
+*** Desde la terminal: ***
+*** $ git remote add origin https://github.com/petrix12/Sistema-de-Historia-Cl-nica-en-Laravel.git ***
+*** $ git push -u origin master ***
 
 
-
-
-*** 61/62 ***

@@ -11,11 +11,16 @@
 |
 */
 
-Auth::routes(['verify' => true]);
-
-/* Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
-}); */
+});
+
+Route::get('home', function () {
+    // return view('home')->middleware('auth');
+    return view('home');
+});
+
+Auth::routes(['verify' => true]);
 
 // Grupo de rutas del backoffice
 Route::group(['middleware' => ['auth'], 'as' => 'backoffice.'], function(){
