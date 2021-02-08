@@ -103,13 +103,7 @@ class UserController extends Controller
     * Asignar los roles en la tabla pivote o intermedia de la base de datos
     */
     public function role_assignment(Request $request, User $user){
-        //dd('Todo esta preparado');
-        // dd($request->roles);
-
-        // Asignación de roles
-        $user->roles()->sync($request->roles);
-        $user->verify_permission_integrity();
-        alert('Éxito', 'Roles asignados', 'success');
+        $user->role_assignment($request);
         return redirect()->route('backoffice.user.show', $user);
     }
 

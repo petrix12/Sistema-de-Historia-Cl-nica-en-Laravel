@@ -900,12 +900,30 @@ INTEGRIDAD EN LOS PERMISOS
     ***
     ***
 
-
-
 *** COMMIT 12: "Integridad en los permisos" ***
 *** Añadir archivos a la zona index: $ git add .
 *** Guardar archivos en repositorio: $ git commit -m "Integridad en los permisos" ***
 
+VIDEO 61:
+ASIGNACIÓN MASIVA DE PERMISO A ROLES
+====================================
+130. Crear método role_assignment en el modelo app\User.php
+    ***
+    ***
+
+131. Crear método permission_mass_assignment en el modelo app\User.php
+    ***
+    ***
+
+*** COMMIT 13: "Asignación masiva de permisos a roles" ***
+*** Añadir archivos a la zona index: $ git add .
+*** Guardar archivos en repositorio: $ git commit -m "Asignación masiva de permisos a roles" ***
+
+VIDEO 62:
+CRUD DE USUARIOS
+================
 
 
-*** 59/62 ***
+
+
+*** 61/62 ***
